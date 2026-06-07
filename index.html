@@ -1,31 +1,194 @@
 <!DOCTYPE html>
+<!--
+  ┌──────────────────────────────────────────────────────────────┐
+  │  이 파일은 "표지(Top) 페이지"입니다.                          │
+  │  p5js 폴더의 가장 바깥(최상단)에 index.html 로 넣으세요.       │
+  │                                                                │
+  │  바꿔도 되는 곳 3가지:                                         │
+  │   1) 아래 <title> 과 <h1> 의 이름/제목                         │
+  │   2) 각 카드의 작품 제목(<h2>)                                 │
+  │   3) 칸이 비거나 잘려 보이면 각 카드의 --cw / --ch 숫자        │
+  │      ( = 그 작품 sketch.js 의 createCanvas(가로, 세로) 값 )    │
+  └──────────────────────────────────────────────────────────────┘
+-->
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>p5.js 작품 모음</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>이두영 · p5.js 작품 모음</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Song+Myung&family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --paper:#f3efe6;
+      --card:#ffffff;
+      --ink:#21242e;
+      --muted:#74798a;
+      --line:#e4dfd2;
+      --static:#3d6b53;   --static-bg:#e8f0ea;
+      --dynamic:#b5532a;  --dynamic-bg:#f6e9df;
+      --stage:300;        /* 카드 미리보기 가로 픽셀 (계산용 숫자) */
+    }
+
+    *{ margin:0; padding:0; box-sizing:border-box; }
+
+    body{
+      font-family:"Gowun Dodum", sans-serif;
+      color:var(--ink);
+      min-height:100vh;
+      padding:60px 20px 80px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      background-color:var(--paper);
+      background-image:
+        radial-gradient(900px 380px at 50% -140px, rgba(255,255,255,.9), rgba(255,255,255,0) 70%),
+        radial-gradient(rgba(33,36,46,.05) 1px, transparent 1px);
+      background-size:auto, 22px 22px;
+      background-repeat:no-repeat, repeat;
+    }
+
+    header{ text-align:center; margin-bottom:46px; max-width:560px; animation:fadeUp .8s ease both; }
+    .kicker{
+      font-size:.74rem; letter-spacing:.3em; text-transform:uppercase;
+      color:var(--muted); margin-bottom:16px;
+    }
+    h1{
+      font-family:"Song Myung", serif; font-weight:400;
+      font-size:2.7rem; line-height:1.15; letter-spacing:.01em;
+    }
+    .lead{ color:var(--muted); margin-top:14px; font-size:.96rem; }
+    .rule{ width:46px; height:2px; background:var(--ink); margin:22px auto 0; opacity:.5; }
+
+    .gallery{ display:grid; grid-template-columns:calc(var(--stage)*1px) calc(var(--stage)*1px); gap:24px; }
+
+    .cell{ animation:fadeUp .75s cubic-bezier(.2,.7,.2,1) both; }
+    .cell:nth-child(1){ animation-delay:.06s; }
+    .cell:nth-child(2){ animation-delay:.14s; }
+    .cell:nth-child(3){ animation-delay:.22s; }
+    .cell:nth-child(4){ animation-delay:.30s; }
+
+    .card{
+      width:calc(var(--stage)*1px);
+      background:var(--card);
+      border-radius:14px;
+      overflow:hidden;
+      box-shadow:0 1px 0 var(--line), 0 18px 32px -24px rgba(20,20,30,.4);
+      transition:transform .25s ease, box-shadow .25s ease;
+    }
+    .card:hover{
+      transform:translateY(-5px);
+      box-shadow:0 1px 0 var(--line), 0 28px 42px -22px rgba(20,20,30,.5);
+    }
+
+    .stage{
+      position:relative;
+      width:calc(var(--stage)*1px);
+      aspect-ratio:var(--cw) / var(--ch);
+      overflow:hidden;
+      background:#fff;
+    }
+    .stage iframe{
+      position:absolute; top:0; left:0; border:0;
+      width:calc(var(--cw) * 1px);
+      height:calc(var(--ch) * 1px);
+      transform-origin:top left;
+      transform:scale(calc(var(--stage) / var(--cw)));
+      pointer-events:none;   /* 미리보기라서 마우스 통과 */
+    }
+    .open{
+      position:absolute; right:10px; bottom:10px; z-index:2;
+      font-size:.72rem; padding:5px 11px; border-radius:999px;
+      background:rgba(20,20,30,.74); color:#fff; text-decoration:none;
+      opacity:0; transform:translateY(5px); transition:opacity .2s, transform .2s;
+    }
+    .card:hover .open{ opacity:1; transform:none; }
+
+    .meta{ display:flex; align-items:center; gap:10px; padding:13px 16px; border-top:1px solid var(--line); }
+    .meta .t{ flex:1; min-width:0; }
+    .lbl{ font-family:"Song Myung", serif; font-size:.73rem; letter-spacing:.05em; color:var(--muted); }
+    .meta h2{ font-size:.95rem; font-weight:400; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .tag{ font-size:.72rem; padding:3px 10px; border-radius:999px; white-space:nowrap; }
+    .tag-static{ color:var(--static); background:var(--static-bg); }
+    .tag-dynamic{ color:var(--dynamic); background:var(--dynamic-bg); }
+
+    .foot{ margin-top:54px; font-size:.78rem; color:var(--muted); letter-spacing:.04em; animation:fadeUp .8s ease .35s both; }
+
+    @keyframes fadeUp{ from{ opacity:0; transform:translateY(16px); } to{ opacity:1; transform:none; } }
+    @media (prefers-reduced-motion: reduce){ *{ animation:none !important; } }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>나의 p5.js 작품</h1>
-        <p>아래 링크를 클릭하여 다양한 p5.js 프로그램을 감상하세요.</p>
-    </header>
 
-    <section id="projects">
-    
-        <div class="project">
-            <a href="sample1/index.html">
-                프로젝트 1: 이 프로그램은 마우스를 따라 움직이는 원을 그립니다.
-            </a>
-        </div>
-    
-        <div class="project">
-            <a href="sample2/index.html">
-                프로젝트 2: 이 프로그램은 다양한 색상으로 변화하는 배경을 만듭니다.
-            </a>
-        </div>
+  <header>
+    <p class="kicker">p5.js Works · 20212770</p>
+    <h1>이두영의 작품 모음</h1>
+    <p class="lead">코드로 그린 정적·동적 작품 네 점을 한자리에 모았습니다.</p>
+    <div class="rule"></div>
+  </header>
 
-    </section>
+  <main class="gallery">
+
+    <!-- 왼쪽 위 : 과제 1 (정적) -->
+    <div class="cell">
+      <article class="card" style="--cw:600; --ch:400;">
+        <div class="stage">
+          <iframe src="sample1/index.html" title="과제 1" loading="lazy"></iframe>
+          <a class="open" href="sample1/index.html" target="_blank" rel="noopener">크게 보기 ↗</a>
+        </div>
+        <div class="meta">
+          <div class="t"><span class="lbl">과제 1</span><h2>도형 일러스트</h2></div>
+          <span class="tag tag-static">정적</span>
+        </div>
+      </article>
+    </div>
+
+    <!-- 오른쪽 위 : 과제 4 (동적) -->
+    <div class="cell">
+      <article class="card" style="--cw:900; --ch:600;">
+        <div class="stage">
+          <iframe src="sample4/index.html" title="과제 4" loading="lazy"></iframe>
+          <a class="open" href="sample4/index.html" target="_blank" rel="noopener">크게 보기 ↗</a>
+        </div>
+        <div class="meta">
+          <div class="t"><span class="lbl">과제 4</span><h2>움직이는 일러스트</h2></div>
+          <span class="tag tag-dynamic">동적</span>
+        </div>
+      </article>
+    </div>
+
+    <!-- 왼쪽 아래 : 과제 2 (정적) -->
+    <div class="cell">
+      <article class="card" style="--cw:600; --ch:400;">
+        <div class="stage">
+          <iframe src="sample2/index.html" title="과제 2" loading="lazy"></iframe>
+          <a class="open" href="sample2/index.html" target="_blank" rel="noopener">크게 보기 ↗</a>
+        </div>
+        <div class="meta">
+          <div class="t"><span class="lbl">과제 2</span><h2>캐릭터 그리기</h2></div>
+          <span class="tag tag-static">정적</span>
+        </div>
+      </article>
+    </div>
+
+    <!-- 오른쪽 아래 : 과제 3 (동적) -->
+    <div class="cell">
+      <article class="card" style="--cw:900; --ch:600;">
+        <div class="stage">
+          <iframe src="sample3/index.html" title="과제 3" loading="lazy"></iframe>
+          <a class="open" href="sample3/index.html" target="_blank" rel="noopener">크게 보기 ↗</a>
+        </div>
+        <div class="meta">
+          <div class="t"><span class="lbl">과제 3</span><h2>움직이는 캐릭터</h2></div>
+          <span class="tag tag-dynamic">동적</span>
+        </div>
+      </article>
+    </div>
+
+  </main>
+
+  <p class="foot">— p5.js · 2026 —</p>
+
 </body>
 </html>
