@@ -18,7 +18,6 @@
       --b: 0.95rem;
       --k: 0.78rem;
     }
-    /* 화면이 좁아지면 자동으로 한 단계씩 작아져서 밖으로 안 튀어나가게 함 */
     @media (max-width: 1380px) { :root { --fw: 330; --descw: 220px; --t: 1.1rem;  --b: 0.9rem;  --k: 0.74rem; } }
     @media (max-width: 1230px) { :root { --fw: 290; --descw: 195px; --t: 1.02rem; --b: 0.85rem; --k: 0.70rem; } }
     @media (max-width: 1080px) { :root { --fw: 255; --descw: 175px; --t: 0.96rem; --b: 0.80rem; --k: 0.68rem; } }
@@ -73,13 +72,17 @@
       transform: scale(calc(var(--fw) / 600));
     }
 
-    .desc {
-      width: var(--descw);
+    .desc { width: var(--descw); font-size: var(--b); line-height: 1.6; color: #43525f; }
+    .desc strong { display: block; margin-bottom: 6px; font-size: var(--t); color: #1f2a36; }
+    .link {
+      display: inline-block;
+      margin-bottom: 8px;
       font-size: var(--b);
-      line-height: 1.6;
-      color: #43525f;
+      color: #1565a0;
+      text-decoration: none;
+      border-bottom: 1px solid currentColor;
     }
-    .desc strong { display: block; margin-bottom: 7px; font-size: var(--t); color: #1f2a36; }
+    .link:hover { color: #0d3f66; }
     .key {
       display: inline-block;
       padding: 0 6px;
@@ -101,7 +104,8 @@
       <div class="frame"><iframe src="sample1/index.html"></iframe></div>
       <div class="desc">
         <strong>과제 1</strong>
-        해면, 불가사리 등의 바다생물이 있는 바다 심해를 초상화로 표현했습니다.
+        <a class="link" href="https://editor.p5js.org/dydylee5/full/9FcJL6UEf" target="_blank" rel="noopener">작품 링크 ↗</a>
+        <p>해면, 불가사리 등의 바다생물이 있는 바다 심해를 초상화로 표현했습니다.</p>
       </div>
     </div>
 
@@ -110,9 +114,12 @@
       <div class="frame"><iframe src="sample4/index.html"></iframe></div>
       <div class="desc">
         <strong>과제 4</strong>
-        마우스를 좌우로 움직이면 분홍 불가사리의 회전 속도가 달라집니다 (오른쪽일수록 빠름).<br>
-        하늘색·스펀지 색과 산호·바위 크기는 시간에 따라 자동으로 변합니다.<br>
-        <span class="key">S</span> 키를 누르면 GIF로 저장됩니다.
+        <a class="link" href="https://editor.p5js.org/dydylee5/full/Bgvy_nYUn" target="_blank" rel="noopener">작품 링크 ↗</a>
+        <p>
+          마우스를 좌우로 움직이면 분홍 불가사리의 회전 속도가 달라집니다 (오른쪽일수록 빠름).<br>
+          하늘색·스펀지 색과 산호·바위 크기는 시간에 따라 자동으로 변합니다.<br>
+          <span class="key">S</span> 키를 누르면 GIF로 저장됩니다.
+        </p>
       </div>
     </div>
 
@@ -121,7 +128,8 @@
       <div class="frame"><iframe src="sample2/index.html"></iframe></div>
       <div class="desc">
         <strong>과제 2</strong>
-        안경 쓴 저의 캐리커처를 그렸습니다.
+        <a class="link" href="https://editor.p5js.org/dydylee5/full/dCtpDUkiU" target="_blank" rel="noopener">작품 링크 ↗</a>
+        <p>안경 쓴 저의 캐리커처를 그렸습니다.</p>
       </div>
     </div>
 
@@ -130,11 +138,14 @@
       <div class="frame"><iframe src="sample3/index.html"></iframe></div>
       <div class="desc">
         <strong>과제 3</strong>
-        화면을 클릭하면 낮 ↔ 밤 배경이 전환됩니다.<br>
-        <span class="key">A</span> 키를 누르고 있으면 안경이 점점 커지고, 떼면 작아집니다.<br>
-        <span class="key">C</span> 키로 정장 ↔ 잠옷을 바꿀 수 있습니다 (2가지의 잠옷 디자인).<br>
-        마우스를 움직이면 구름이 그 방향으로 따라옵니다.<br>
-        <span class="key">S</span> 키를 누르면 GIF로 저장됩니다.
+        <a class="link" href="https://editor.p5js.org/dydylee5/full/Xf7e_23b0" target="_blank" rel="noopener">작품 링크 ↗</a>
+        <p>
+          화면을 클릭하면 낮 ↔ 밤 배경이 전환됩니다.<br>
+          <span class="key">A</span> 키를 누르고 있으면 안경이 점점 커지고, 떼면 작아집니다.<br>
+          <span class="key">C</span> 키로 정장 ↔ 잠옷을 바꿀 수 있습니다 (2가지의 잠옷 디자인).<br>
+          마우스를 움직이면 구름이 그 방향으로 따라옵니다.<br>
+          <span class="key">S</span> 키를 누르면 GIF로 저장됩니다.
+        </p>
       </div>
     </div>
 
