@@ -23,12 +23,39 @@ body {
   padding: 24px;
   font-family: sans-serif;
   color: #2b3440;
-  background:
-    radial-gradient(1200px 620px at 18% 0%,  #f2faff, transparent 60%),
-    radial-gradient(1000px 720px at 88% 28%, #cfe7fa, transparent 55%),
-    linear-gradient(165deg, #e8f5ff 0%, #cfe6f7 55%, #dceffb 100%);
-  background-attachment: fixed;
+  background: #e8f5ff;   /* 배경 그림이 안 뜰 때를 위한 기본색 */
 }
+
+/* 화면 뒤를 가득 채우는 움직이는 배경.
+   여러 하늘색이 섞인 큰 그러데이션을 좌우로 천천히 흘려서 파도처럼 보이게 함 */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;            /* 작품·글씨보다 뒤에 깔림 */
+  background: linear-gradient(
+    120deg,
+    #eaf7ff 0%,
+    #d2ecfb 20%,
+    #bfe6f5 38%,
+    #cfe9fb 55%,
+    #bfe3f0 72%,
+    #ddf0fc 88%,
+    #eaf7ff 100%
+  );
+  background-size: 300% 300%;          /* 화면보다 크게 만들어 둠 */
+  animation: ocean 16s ease-in-out infinite;  /* 16초마다 한 번 왕복 */
+}
+@keyframes ocean {
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
+}
+/* 움직임을 불편해하는 사용자 설정이면 애니메이션을 끔 */
+@media (prefers-reduced-motion: reduce) {
+  body::before { animation: none; }
+}
+
 h1 { margin-bottom: 26px; font-size: 1.8rem; }
 
 #projects {
