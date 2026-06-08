@@ -4,95 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>과제 모음 - 20212770 이두영</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    /* 크기 조절은 아래 숫자들만 바꾸면 됩니다.
-       --fw  : 작품 미리보기 가로 픽셀 (작품 캔버스 600 기준)
-       --descw : 설명 칸 너비
-       --t/--b/--k : 제목 / 설명 / 키 글씨 크기 */
-    :root {
-      --fw: 380;
-      --descw: 250px;
-      --t: 1.2rem;
-      --b: 0.95rem;
-      --k: 0.78rem;
-    }
-    @media (max-width: 1380px) { :root { --fw: 330; --descw: 220px; --t: 1.1rem;  --b: 0.9rem;  --k: 0.74rem; } }
-    @media (max-width: 1230px) { :root { --fw: 290; --descw: 195px; --t: 1.02rem; --b: 0.85rem; --k: 0.70rem; } }
-    @media (max-width: 1080px) { :root { --fw: 255; --descw: 175px; --t: 0.96rem; --b: 0.80rem; --k: 0.68rem; } }
-
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      padding: 24px;
-      font-family: sans-serif;
-      color: #2b3440;
-      background:
-        radial-gradient(1200px 620px at 18% 0%,  #f2faff, transparent 60%),
-        radial-gradient(1000px 720px at 88% 28%, #cfe7fa, transparent 55%),
-        linear-gradient(165deg, #e8f5ff 0%, #cfe6f7 55%, #dceffb 100%);
-      background-attachment: fixed;
-    }
-    h1 { margin-bottom: 26px; font-size: 1.8rem; }
-
-    #projects {
-      display: grid;
-      grid-template-columns: auto auto;
-      column-gap: 30px;
-      row-gap: 30px;
-    }
-
-    .cell {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      gap: 18px;
-    }
-
-    .frame {
-      flex: none;
-      width: calc(var(--fw) * 1px);
-      aspect-ratio: 3 / 2;
-      position: relative;
-      overflow: hidden;
-      border: 1px solid #b9d3e6;
-      border-radius: 10px;
-      background: #fff;
-    }
-    .frame iframe {
-      position: absolute;
-      top: 0; left: 0;
-      width: 600px;
-      height: 400px;
-      border: none;
-      transform-origin: top left;
-      transform: scale(calc(var(--fw) / 600));
-    }
-
-    .desc { width: var(--descw); font-size: var(--b); line-height: 1.6; color: #43525f; }
-    .desc strong { display: block; margin-bottom: 6px; font-size: var(--t); color: #1f2a36; }
-    .link {
-      display: inline-block;
-      margin-bottom: 8px;
-      font-size: var(--b);
-      color: #1565a0;
-      text-decoration: none;
-      border-bottom: 1px solid currentColor;
-    }
-    .link:hover { color: #0d3f66; }
-    .key {
-      display: inline-block;
-      padding: 0 6px;
-      border: 1px solid #9fb9cc;
-      border-radius: 4px;
-      background: #fff;
-      font-family: monospace;
-      font-size: var(--k);
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h1>과제 모음 - 20212770 이두영</h1>
@@ -117,7 +29,7 @@
         <a class="link" href="https://editor.p5js.org/dydylee5/full/Bgvy_nYUn" target="_blank" rel="noopener">작품 링크 ↗</a>
         <p>
           마우스를 좌우로 움직이면 분홍 불가사리의 회전 속도가 달라집니다 (오른쪽일수록 빠름).<br>
-          하늘색·스펀지 색과 산호·바위 크기는 시간에 따라 자동으로 변합니다.<br>
+          하늘,해면의 색과 산호,바위의 크기는 시간에 따라 자동으로 변합니다.<br>
           <span class="key">S</span> 키를 누르면 GIF로 저장됩니다.
         </p>
       </div>
