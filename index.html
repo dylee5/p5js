@@ -25,12 +25,22 @@
 
     #projects {
       display: grid;
-      grid-template-columns: 300px 300px;
-      gap: 32px 14px;          /* 세로 간격 32px, 가로 간격 14px */
+      grid-template-columns: auto auto;
+      column-gap: 30px;        /* 과제1↔과제4 / 과제2↔과제3 사이 가로 거리 */
+      row-gap: 28px;           /* 위·아래 줄 사이 세로 거리 */
     }
-    .cell { display: flex; flex-direction: column; gap: 8px; }
+
+    /* 작품(왼쪽) + 설명(오른쪽)을 가로로 나란히 배치 */
+    .cell {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 16px;
+    }
 
     .frame {
+      flex: none;
+      width: 300px;
       aspect-ratio: 3 / 2;     /* 작품 캔버스(600x400)와 같은 비율 */
       position: relative;
       overflow: hidden;
@@ -48,8 +58,13 @@
       transform: scale(0.5);
     }
 
-    .desc { font-size: 0.8rem; line-height: 1.6; color: #43525f; }
-    .desc strong { display: block; margin-bottom: 5px; font-size: 0.9rem; color: #1f2a36; }
+    .desc {
+      width: 210px;            /* 작품 오른쪽 설명 칸 너비 */
+      font-size: 0.8rem;
+      line-height: 1.6;
+      color: #43525f;
+    }
+    .desc strong { display: block; margin-bottom: 6px; font-size: 0.95rem; color: #1f2a36; }
     .key {
       display: inline-block;
       padding: 0 6px;
