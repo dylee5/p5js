@@ -1,9 +1,5 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* 크기 조절은 아래 숫자들만 바꾸면 됩니다.
-   --fw  : 작품 미리보기 가로 픽셀 (작품 캔버스 600 기준)
-   --descw : 설명 칸 너비
-   --t/--b/--k : 제목 / 설명 / 키 글씨 크기 */
 :root {
   --fw: 380;
   --descw: 250px;
@@ -23,40 +19,48 @@ body {
   padding: 24px;
   font-family: sans-serif;
   color: #2b3440;
-  background: #e8f5ff;   /* 배경 그림이 안 뜰 때를 위한 기본색 */
+  background: #cfeafb;   /* 배경 그림이 안 뜰 때를 위한 기본색 */
 }
 
 /* 화면 뒤를 가득 채우는 움직이는 배경.
-   여러 하늘색이 섞인 큰 그러데이션을 좌우로 천천히 흘려서 파도처럼 보이게 함 */
+   밝은 물빛과 진한 파란색을 번갈아 넣어, 대각선으로 흐르며 파도처럼 보이게 함 */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;            /* 작품·글씨보다 뒤에 깔림 */
   background: linear-gradient(
-    120deg,
-    #eaf7ff 0%,
-    #d2ecfb 20%,
-    #bfe6f5 38%,
-    #cfe9fb 55%,
-    #bfe3f0 72%,
-    #ddf0fc 88%,
-    #eaf7ff 100%
+    115deg,
+    #eaf8ff 0%,
+    #6cc0e8 16%,
+    #d4f0fb 32%,
+    #3ba0dd 48%,
+    #cdeefa 64%,
+    #79c7ec 82%,
+    #eaf8ff 100%
   );
-  background-size: 300% 300%;          /* 화면보다 크게 만들어 둠 */
-  animation: ocean 16s ease-in-out infinite;  /* 16초마다 한 번 왕복 */
+  background-size: 400% 400%;          /* 화면보다 크게 만들어 둠 */
+  animation: ocean 13s ease-in-out infinite;  /* 13초마다 한 번 왕복 */
 }
 @keyframes ocean {
-  0%   { background-position: 0%   50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0%   50%; }
+  0%   { background-position: 0%   0%;   }
+  50%  { background-position: 100% 100%; }
+  100% { background-position: 0%   0%;   }
 }
 /* 움직임을 불편해하는 사용자 설정이면 애니메이션을 끔 */
 @media (prefers-reduced-motion: reduce) {
   body::before { animation: none; }
 }
 
-h1 { margin-bottom: 26px; font-size: 1.8rem; }
+h1 {
+  margin-bottom: 26px;
+  font-size: 1.8rem;
+  /* 진한 물결 위에서도 제목이 또렷하도록 반투명 흰 판 */
+  padding: 8px 20px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(2px);
+}
 
 #projects {
   display: grid;
@@ -92,7 +96,17 @@ h1 { margin-bottom: 26px; font-size: 1.8rem; }
   transform: scale(calc(var(--fw) / 600));
 }
 
-.desc { width: var(--descw); font-size: var(--b); line-height: 1.6; color: #43525f; }
+.desc {
+  width: var(--descw);
+  font-size: var(--b);
+  line-height: 1.6;
+  color: #43525f;
+  /* 진한 물결 위에서도 설명 글이 또렷하도록 반투명 흰 판 */
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(2px);
+}
 .desc strong { display: block; margin-bottom: 6px; font-size: var(--t); color: #1f2a36; }
 .link {
   display: inline-block;
